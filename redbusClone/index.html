@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+    /* Basic CSS Styling */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    /* Header */
+    .header {
+      background-color: #d84e55;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      margin: 0;
+    }
+    .nav-links a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    /* Search Box */
+    .search-container {
+      background-color: white;
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    .search-container input,
+    .search-container button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .search-container button {
+      background-color: #d84e55;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Search Results */
+    .results {
+      width: 90%;
+      margin: 20px auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      display: none;
+    }
+    .bus-result {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+    .bus-result:last-child {
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <header>
+        <div id="header-container">
+            <img src="pic2.jpg" alt="RedbusClone" height="130px" id="redbus logo">
+        </div>
+      </header>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">My Bookings</a>
+      <a href="#">Offers</a>
+      <a href="#">Support</a>
+    </div>
+  </div>
+
+  <!-- Search Box -->
+  <div class="search-container">
+    <h2>Book Your Bus Tickets</h2>
+    <input type="text" id="source" placeholder="Enter Source City" />
+    <input type="text" id="destination" placeholder="Enter Destination City" />
+    <input type="date" id="date" />
+    <button id="searchBtn">Search Buses</button>
+  </div>
+
+  <!-- Search Results -->
+  <div class="results" id="results">
+    <h3>Available Buses</h3>
+    <div id="busList">
+      <!-- Bus results will appear here -->
+    </div>
+  </div>
+
+  <div id="loading" style="display: none; text-align: center; margin: 20px;">
+    <p>Loading Buses...</p>
+    <div class="spinner"></div>
+  </div>
+
+  <select id="priceFilter" style="width: 90%; max-width: 600px; margin: 10px auto; display: block;">
+  <option value="">Filter by Price</option>
+  <option value="400">Below ₹400</option>
+  <option value="600">Below ₹600</option>
+</select>
+
+  
+
+  <script>
+    // JavaScript for Dynamic Search Results
+    document.getElementById("searchBtn").addEventListener("click", function () {
+      const source = document.getElementById("source").value;
+      const destination = document.getElementById("destination").value;
+      const date = document.getElementById("date").value;
+
+      const resultsContainer = document.getElementById("results");
+      const busList = document.getElementById("busList");
+
+      // Check for empty fields
+      if (!source || !destination || !date) {
+        alert("Please fill in all the fields.");
+        return;
+      }
+
+      // Dummy bus data
+      const buses = [
+        { name: "AC Sleeper", time: "10:00 AM", price: "₹500" },
+        { name: "Non-AC Seater", time: "12:30 PM", price: "₹350" },
+        { name: "Volvo Multi-Axle", time: "5:00 PM", price: "₹800" },
+      ];
+
+      // Clear previous results
+      busList.innerHTML = "";
+
+      // Populate results dynamically
+      buses.forEach((bus) => {
+        const busDiv = document.createElement("div");
+        busDiv.classList.add("bus-result");
+        busDiv.innerHTML = `
+          <strong>Bus Name:</strong> ${bus.name}<br>
+          <strong>Time:</strong> ${bus.time}<br>
+          <strong>Price:</strong> ${bus.price}
+        `;
+        busList.appendChild(busDiv);
+      });
+
+      // Show results container
+      resultsContainer.style.display = "block";
+    });
+  </script>
+</body>
+</html>
